@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private val messages = ArrayList<Message>()
-    private var messageAdapter: MessageAdapter? = null // 提到全局
+    private lateinit var messageAdapter: MessageAdapter // 提到全局,延迟初始化
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (content.isNotEmpty()) {
                     val message = Message(content, Message.SEND_MESSAGE)
                     messages.add(message)
-                    messageAdapter?.notifyItemInserted(messages.size - 1)//刷新recyceview中的显示
-                    rcv_content.scrollToPosition(messages.size - 1)//将recycler定位到最后一行
+                    messageAdapter.notifyItemInserted(messages.size - 1) //刷新recyceview中的显示
+                    rcv_content.scrollToPosition(messages.size - 1) //将recycler定位到最后一行
                     et_input.setText("")
                 }
             }
